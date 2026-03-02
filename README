@@ -1,69 +1,84 @@
-# Synthesizing Cultural Garment Triplets for Composed Image Retrieval
+# 👗 AoDai-STC: Synthesizing Cultural Garment Triplets for Composed Image Retrieval
+
+**Official repository for AoDai-STC**, a comprehensive pipeline for synthesizing high-quality triplet datasets (sketch-text-image) specifically for cultural garments. We address the data scarcity bottleneck in Composed Image Retrieval (CIR) by leveraging state-of-the-art generative models to produce **20,000 curated triplets** of the Vietnamese áo dài.
 
 ## 📋 Overview
 
-This research project presents a comprehensive pipeline for synthesizing high-quality triplet datasets (sketch-text-image) of cultural garments using advanced generative models. We leverage the **SANA diffusion model** for high-fidelity image synthesis from sketches and the **Qwen2.5 LLM** to generate detailed captions, enabling the creation of large-scale training data for composed image retrieval tasks. Our approach produces **20,000 curated triplets** of cultural garments suitable for training and evaluation of composed image retrieval systems.
+This research project presents a novel pipeline combining **SANA-ControlNet** for high-fidelity sketch-conditioned image synthesis with **Qwen2.5 3B Instruct** for semantic caption generation. We address the critical challenge of obtaining diverse, high-quality training data for specialized domains like cultural garments. Our approach automates the entire triplet synthesis workflow, eliminating manual annotation and producing a large-scale, multi-modal dataset suitable for training and evaluation of composed image retrieval systems.
 
 ## 🎯 Motivation
 
 Composed image retrieval (CIR) is the task of finding images in a database based on a query combining a reference image with text modifications. However, obtaining diverse, high-quality training data remains a significant bottleneck, particularly for specialized domains like cultural garments where data is scarce.
 
 This project addresses this challenge by:
-- **Automating triplet generation** from sketch inputs, eliminating manual annotation requirements
-- **Leveraging generative models** (SANA) to synthesize diverse, realistic garment images
-- **Generating consistent descriptions** (Qwen2.5) to create meaningful text modalities
-- **Producing large-scale datasets** that enable training of robust CIR models for cultural garment applications
+- **Automating triplet generation** from human-drawn sketch inputs, eliminating manual annotation requirements
+- **Leveraging SANA-ControlNet** to synthesize photorealistic, culturally accurate garment images conditioned on spatial sketches
+- **Utilizing Qwen2.5 3B Instruct** to generate consistent, attribute-rich captions starting with "A photo of..."
+- **Modeling real-world uncertainty** via a Multi-Target Query Design ($1 \rightarrow 3$ mapping) that addresses false-negative supervision in composed retrieval
+- **Producing large-scale datasets** (20,000 triplets) that enable training of robust CIR models for cultural garment applications
 
 ## 🔧 Technical Approach
 
-### Pipeline Overview
+### The Synthesis Pipeline
+
+Our pipeline follows a structured flow from abstract sketch input to aligned multi-modal triplets:
 
 ```
-Sketch Input
+Sketch Input  +  Attribute Sampling  +  Structured Prompts
+    ↓                      ↓
+[SANA-ControlNet: Spatial Control]  [Attribute Generation]
     ↓
-[SANA Diffusion Model]
+Synthesized High-Fidelity Garment Image
     ↓
-Synthesized Garment Image
+[Qwen2.5 3B Instruct: Caption Distillation]
     ↓
-[Qwen2.5 LLM Caption Generation]
+Neutral, Factual Text Description (Starting with "A photo of...")
     ↓
-Text Description (Caption)
+Triplet Formation: (Sketch, Caption, Multi-Target Images)
     ↓
-Triplet Formation: (Sketch, Text, Image)
-    ↓
-Triplet Dataset (20,000 samples)
+Curated Triplet Dataset: (S, C, I₁, I₂, I₃)
 ```
 
 ### Key Components
 
-1. **Image Synthesis (SANA)**
-   - Generates high-quality garment images conditioned on sketch inputs
-   - Produces diverse variations suitable for CIR training
-   - Ensures consistency with sketch semantics while adding photorealistic details
+1. **Attribute Sampling**
+   - 11 curated categories from fashion archives: Fabric, Silhouette, Neckline, Sleeve Style, Color, Pattern, Embroidery, Fit, Length, Collar Type, and Ornamental Details
+   - Structured sampling ensures diverse, culturally authentic garment representations
+   - Maintains semantic consistency across triplets
 
-2. **Caption Synthesis (Qwen2.5 LLM)**
-   - Generates detailed, contextually appropriate descriptions for each synthesized image
-   - Captures garment attributes (style, color, fit, cultural elements)
-   - Produces captions that complement sketch-image pairs for robust triplet learning
+2. **Image Synthesis (SANA-ControlNet)**
+   - Generates high-quality garment images conditioned on sketch inputs and structured prompts
+   - Spatial control via ControlNet ensures sketch-image semantic alignment
+   - Produces diverse variations suitable for CIR training with photorealistic details
+   - Maintains cultural authenticity while adding photorealistic rendering
 
-3. **Triplet Formation**
-   - Combines sketch, synthesized image, and LLM-generated caption
+3. **Caption Generation (Qwen2.5 3B Instruct)**
+   - Distills the attribute set into neutral, factual single-sentence captions
+   - All captions follow the format: "A photo of [garment description]..."
+   - Captures essential attributes (style, color, fit, cultural elements) comprehensively
+   - Produces descriptions that complement sketch-image pairs for robust triplet learning
+
+4. **Triplet Formation & Multi-Target Query Design**
+   - Aggregates Sketch (S), Caption (C), and Multiple Target Images (I₁, I₂, I₃) into final dataset entries
+   - One-to-Three mapping ($1 \rightarrow 3$) explicitly addresses false-negative supervision in CIR
+   - Provides multiple valid targets for each query, reflecting real-world retrieval scenarios
    - Creates balanced datasets with diverse cultural garment categories
-   - Maintains semantic consistency across modalities
 
 ## 📊 Dataset
 
-- **Total Triplets**: 20,000
-- **Modalities**: Sketch, Image, Text
-- **Domain**: Cultural Garments (Áo Dài and related traditional clothing)
-- **Format**: JSON-based triplet annotations with image and sketch files
-- **Train/Val/Test Split**: Provided in `aodai/captions/` directory
-
 ### Dataset Statistics
-- **Aodai Dataset**: Primary cultural garment category
-- **Sketch Annotations**: Hand-drawn or AI-generated sketches
-- **Image Synthesis**: SANA-generated photorealistic renderings
-- **Text Descriptions**: Qwen2.5-generated captions with attribute-level details
+- **Total Triplets**: 20,000 curated sketch-text-image triplets
+- **Human Sketches**: 650 unique human-drawn query sketches
+- **Synthesized Images**: 21,000 high-resolution fashion renderings (3 per triplet)
+- **Domain**: Vietnamese Cultural Garments (Áo Dài and related traditional clothing)
+- **Format**: JSON-based annotations with split support (train.json, val.json, test.json)
+- **Modalities**: Sketch, Image, Text with explicit one-to-three mapping
+
+### Data Organization
+- **Triplet Format**: Each entry contains (Sketch S, Caption C, Image₁ I₁, Image₂ I₂, Image₃ I₃)
+- **Splits**: Training, validation, and test sets with balanced class distributions
+- **Annotations**: JSON files in `aodai/captions/` directory with image-sketch mapping files
+- **Image Quality**: High-resolution photorealistic renderings suitable for deep learning models
 
 ## 📁 Project Structure
 
@@ -177,10 +192,15 @@ python metric.py --triplet_file aodai/captions/triplet.json --model_name CLIP4Ci
 
 ## 🏆 Research Contributions
 
-1. **Automated Triplet Synthesis**: Novel pipeline combining diffusion-based image synthesis with LLM caption generation
-2. **Large-Scale Cultural Garment Dataset**: 20,000 curated triplets for composed image retrieval
-3. **Multi-Modal Consistency**: Ensures semantic alignment across sketch, image, and text modalities
-4. **Benchmark Evaluation**: Comprehensive evaluation against state-of-the-art CIR models
+1. **Automated Triplet Synthesis**: First pipeline combining diffusion spatial control (SANA-ControlNet) with LLM semantic distillation (Qwen2.5) for cultural garment domain-specific data generation
+
+2. **Domain-Specific Benchmark**: Establishes the first comprehensive benchmark for fine-grained composed image retrieval in the "Áo Dài" (Vietnamese cultural garment) domain with 20,000 high-quality triplets
+
+3. **One-to-Many Mapping Design**: Explicitly addresses false-negative supervision in composed retrieval through a structured Multi-Target Query Design ($1 \rightarrow 3$ mapping) that reflects real-world uncertainty
+
+4. **Multi-Modal Consistency**: Ensures semantic alignment across sketch, image, and text modalities through structured attribute sampling and LLM caption distillation
+
+5. **Benchmark Evaluation**: Comprehensive evaluation against state-of-the-art CIR models (Bi-Blip4CIR, CLIP4Cir, Pic2Word, SEARLE) demonstrating dataset utility
 
 ## 📚 Benchmarks
 
@@ -193,12 +213,12 @@ The project includes implementations and evaluations of:
 
 Each benchmark includes pre-trained models and evaluation scripts in the `benchmark/` directory.
 
-## 📄 Citation
+## � Citation
 
 If you use this dataset or pipeline in your research, please cite:
 
 ```bibtex
-@misc{culturalgarment_triplets_2026,
+@misc{AoDaiSTC2026,
   title={Synthesizing Cultural Garment Triplets for Composed Image Retrieval},
   author={[Your Name/Lab]},
   year={2026},
