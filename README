@@ -1,0 +1,228 @@
+# Synthesizing Cultural Garment Triplets for Composed Image Retrieval
+
+## 📋 Overview
+
+This research project presents a comprehensive pipeline for synthesizing high-quality triplet datasets (sketch-text-image) of cultural garments using advanced generative models. We leverage the **SANA diffusion model** for high-fidelity image synthesis from sketches and the **Qwen2.5 LLM** to generate detailed captions, enabling the creation of large-scale training data for composed image retrieval tasks. Our approach produces **20,000 curated triplets** of cultural garments suitable for training and evaluation of composed image retrieval systems.
+
+## 🎯 Motivation
+
+Composed image retrieval (CIR) is the task of finding images in a database based on a query combining a reference image with text modifications. However, obtaining diverse, high-quality training data remains a significant bottleneck, particularly for specialized domains like cultural garments where data is scarce.
+
+This project addresses this challenge by:
+- **Automating triplet generation** from sketch inputs, eliminating manual annotation requirements
+- **Leveraging generative models** (SANA) to synthesize diverse, realistic garment images
+- **Generating consistent descriptions** (Qwen2.5) to create meaningful text modalities
+- **Producing large-scale datasets** that enable training of robust CIR models for cultural garment applications
+
+## 🔧 Technical Approach
+
+### Pipeline Overview
+
+```
+Sketch Input
+    ↓
+[SANA Diffusion Model]
+    ↓
+Synthesized Garment Image
+    ↓
+[Qwen2.5 LLM Caption Generation]
+    ↓
+Text Description (Caption)
+    ↓
+Triplet Formation: (Sketch, Text, Image)
+    ↓
+Triplet Dataset (20,000 samples)
+```
+
+### Key Components
+
+1. **Image Synthesis (SANA)**
+   - Generates high-quality garment images conditioned on sketch inputs
+   - Produces diverse variations suitable for CIR training
+   - Ensures consistency with sketch semantics while adding photorealistic details
+
+2. **Caption Synthesis (Qwen2.5 LLM)**
+   - Generates detailed, contextually appropriate descriptions for each synthesized image
+   - Captures garment attributes (style, color, fit, cultural elements)
+   - Produces captions that complement sketch-image pairs for robust triplet learning
+
+3. **Triplet Formation**
+   - Combines sketch, synthesized image, and LLM-generated caption
+   - Creates balanced datasets with diverse cultural garment categories
+   - Maintains semantic consistency across modalities
+
+## 📊 Dataset
+
+- **Total Triplets**: 20,000
+- **Modalities**: Sketch, Image, Text
+- **Domain**: Cultural Garments (Áo Dài and related traditional clothing)
+- **Format**: JSON-based triplet annotations with image and sketch files
+- **Train/Val/Test Split**: Provided in `aodai/captions/` directory
+
+### Dataset Statistics
+- **Aodai Dataset**: Primary cultural garment category
+- **Sketch Annotations**: Hand-drawn or AI-generated sketches
+- **Image Synthesis**: SANA-generated photorealistic renderings
+- **Text Descriptions**: Qwen2.5-generated captions with attribute-level details
+
+## 📁 Project Structure
+
+```
+BM_ICMR2026/
+├── generation/              # Image and caption generation pipeline
+│   ├── sana_inference.py   # Single image synthesis script
+│   ├── sana_inference_multi.py  # Batch synthesis script
+│   ├── Sana/               # SANA model repository
+│   ├── prompts_ao_dai.json # Generation prompts
+│   └── features.json       # Feature storage
+│
+├── notebook/               # Jupyter notebooks for analysis
+│   └── Qwen2.5_captions.ipynb  # Caption generation notebook
+│
+├── aodai/                  # Dataset directory
+│   ├── origin.json         # Original sketch-text pairs
+│   ├── output_triplet.json # Generated triplets
+│   ├── train.json, test.json, val.json  # Split annotations
+│   ├── captions/           # Caption data
+│   │   ├── cap.train.json, cap.test.json, cap.val.json
+│   │   └── triplet.json    # Final triplet annotations
+│   ├── images/             # Synthesized garment images
+│   ├── sketches/           # Input sketches
+│   └── images_split/       # Image-sketch mapping files
+│
+├── benchmark/              # Evaluation benchmarks
+│   ├── Bi-Blip4CIR/        # BliP-based CIR model
+│   ├── CLIP4Cir/           # CLIP-based CIR model
+│   ├── pic2word/           # Picture-to-word baseline
+│   └── SEARLE/             # SEARLE benchmark
+│
+├── generated/              # Final outputs
+│   ├── output_triplet_final.json      # Final triplet dataset
+│   └── outputs_ao_dai_caption_refined.json
+│
+├── metric.py               # Evaluation metrics
+├── process_triplets.py     # Triplet processing utilities
+├── triplet.py              # Triplet data structures
+├── requirements.txt        # Python dependencies
+└── README.md              # This file
+```
+
+## 🚀 Getting Started
+
+### Requirements
+
+- Python 3.8+
+- PyTorch 2.0+
+- CUDA 11.8+ (for GPU acceleration)
+- See `requirements.txt` for complete dependency list
+
+### Installation
+
+1. **Clone the repository and install dependencies**
+```bash
+cd BM_ICMR2026
+pip install -r requirements.txt
+```
+
+2. **Setup SANA model** (if generating new images)
+```bash
+cd generation/Sana
+# Follow SANA installation instructions in generation/Sana/README.md
+```
+
+3. **Prepare input data**
+```bash
+# Ensure sketches are in aodai/sketches/
+# Ensure prompts are configured in generation/prompts_ao_dai.json
+```
+
+## 📝 Usage
+
+### 1. Image Synthesis with SANA
+
+**Single image synthesis:**
+```bash
+cd generation
+python sana_inference.py --config configs/sana_config.yaml --sketch_path path/to/sketch.png
+```
+
+**Batch synthesis:**
+```bash
+cd generation
+bash inference_multi.sh
+```
+
+### 2. Caption Generation with Qwen2.5
+
+Generate captions for synthesized images using the provided notebook:
+```
+notebook/Qwen2.5_captions.ipynb
+```
+
+Or use the caption generation script directly (if available).
+
+### 3. Triplet Formation
+
+Process and form triplets from synthesized images and captions:
+```bash
+python process_triplets.py --input_dir aodai/ --output_file generated/output_triplet_final.json
+```
+
+### 4. Evaluation
+
+Evaluate CIR models on the synthesized dataset:
+```bash
+python metric.py --triplet_file aodai/captions/triplet.json --model_name CLIP4Cir
+```
+
+## 🏆 Research Contributions
+
+1. **Automated Triplet Synthesis**: Novel pipeline combining diffusion-based image synthesis with LLM caption generation
+2. **Large-Scale Cultural Garment Dataset**: 20,000 curated triplets for composed image retrieval
+3. **Multi-Modal Consistency**: Ensures semantic alignment across sketch, image, and text modalities
+4. **Benchmark Evaluation**: Comprehensive evaluation against state-of-the-art CIR models
+
+## 📚 Benchmarks
+
+The project includes implementations and evaluations of:
+
+- **Bi-Blip4CIR**: Bidirectional BLIP-based composed image retrieval
+- **CLIP4Cir**: CLIP-based composed image retrieval with fine-tuning
+- **Pic2Word**: Vision-language model for composed retrieval
+- **SEARLE**: Scalable end-to-end architecture for image retrieval
+
+Each benchmark includes pre-trained models and evaluation scripts in the `benchmark/` directory.
+
+## 📄 Citation
+
+If you use this dataset or pipeline in your research, please cite:
+
+```bibtex
+@misc{culturalgarment_triplets_2026,
+  title={Synthesizing Cultural Garment Triplets for Composed Image Retrieval},
+  author={[Your Name/Lab]},
+  year={2026},
+  note={Submitted to ICMR 2026}
+}
+```
+
+## 📞 Contact
+
+For questions, suggestions, or collaboration opportunities, please reach out to the project maintainers.
+
+## 📖 References
+
+- SANA: Efficient High-Resolution Image Synthesis
+- Qwen2.5: Advanced Large Language Model
+- CLIP4Cir: Composed Image Retrieval with Fine-tuning
+- Composed Image Retrieval: A Review and Best Practices
+
+## 📄 License
+
+This project is licensed under the MIT License. See LICENSE file for details.
+
+---
+
+**Status**:  Research Project  
+**Last Updated**: March 2026  
+**Version**: 1.0

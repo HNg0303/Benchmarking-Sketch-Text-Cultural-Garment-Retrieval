@@ -1,0 +1,145 @@
+{
+   "fabric": {
+      "reference": "https://hanoivoyage.com/en/blog/ao-dai-vietnam-traditional-costume.html",
+      "values": [
+         "silk",
+         "brocade",
+         "chiffon",
+         "lace",
+         "linen",
+         "polyester blend",
+         "organza",
+         "velvet"
+      ]
+   },
+   "color": {
+      "reference": "https://hanoivoyage.com/en/blog/ao-dai-vietnam-traditional-costume.html",
+      "values": [
+         "white",
+         "red",
+         "gold / yellow",
+         "pastel pink",
+         "lavender",
+         "baby blue",
+         "deep blue",
+         "black"
+      ]
+   },
+   "style_silhouette": {
+      "reference": "https://privatetourasia.com/everything-you-need-to-know-about-ao-dai-vietnams-traditional-costume",
+      "values": [
+         "traditional fitted tunic",
+         "modern fitted silhouette",
+         "loose relaxed silhouette",
+         "raglan sleeve silhouette",
+         "asymmetric hem silhouette",
+         "short / midi tunic variant",
+         "layered panel style",
+         "tailored waist silhouette"
+      ]
+   },
+   "neckline": {
+      "reference": "https://aodaimyan.com/blogs/news/ao-dai-vietnams-most-iconic-dress",
+      "values": [
+         "high mandarin collar",
+         "boat / open neckline",
+         "rounded neckline",
+         "sweetheart-inspired neckline",
+         "low modest V-neckline",
+         "collarless",
+         "slit neckline",
+         "U-shaped neckline"
+      ]
+   },
+   "sleeves": {
+      "reference": "https://hanoivoyage.com/en/blog/ao-dai-vietnam-traditional-costume.html",
+      "values": [
+         "long fitted sleeves",
+         "raglan sleeves",
+         "short sleeves",
+         "elbow-length sleeves",
+         "flared sleeves",
+         "sleeveless",
+         "puffed long sleeves",
+         "cap sleeves"
+      ]
+   },
+   "floral_embellishment": {
+      "reference": "https://hanoivoyage.com/en/blog/ao-dai-vietnam-traditional-costume.html",
+      "values": [
+         "plain / no embellishment",
+         "embroidered floral motifs",
+         "printed floral patterns",
+         "beading / sequins floral accents",
+         "3D floral appliqué",
+         "lace-embedded floral style",
+         "nature-inspired printed scenes",
+         "paisley / mixed graphic motifs"
+      ]
+   },
+   "waist_closure": {
+      "reference": "https://privatetourasia.com/everything-you-need-to-know-about-ao-dai-vietnams-traditional-costume",
+      "values": [
+         "side button closure",
+         "hidden zipper closure",
+         "sash / belt closure",
+         "wrap-style closure",
+         "decorative buckle detail",
+         "traditional loop-and-button",
+         "elastic cinched waist",
+         "diagonal snap closure"
+      ]
+   },
+   "length_hem": {
+      "reference": "https://privatetourasia.com/everything-you-need-to-know-about-ao-dai-vietnams-traditional-costume",
+      "values": [
+         "floor-length tunic with side slits",
+         "ankle-length tunic",
+         "mid-calf tunic",
+         "knee-length tunic",
+         "high side slit variant",
+         "asymmetric hem tunic",
+         "layered hem tunic",
+         "short tunic with trousers"
+      ]
+   },
+   "background": {
+      "reference": "https://privatetourasia.com/everything-you-need-to-know-about-ao-dai-vietnams-traditional-costume",
+      "values": [
+         "traditional courtyard",
+         "historic temple steps",
+         "quiet urban street",
+         "garden walkway",
+         "festive celebration background",
+         "classic architecture scene",
+         "riverside promenade",
+         "cultural performance stage"
+      ]
+   },
+   "lighting": {
+      "reference": "https://privatetourasia.com/everything-you-need-to-know-about-ao-dai-vietnams-traditional-costume",
+      "values": [
+         "soft natural daylight",
+         "early morning sun",
+         "diffused outdoor lighting",
+         "golden hour lighting",
+         "overcast gentle lighting",
+         "warm sunset light",
+         "soft indoor light",
+         "shade with subtle highlights"
+      ]
+   },
+   "cultural_context": {
+      "reference": "https://vietdreamtravel.vn/ao-dai/",
+      "values": [
+         "wedding / ceremonial attire",
+         "Lunar New Year (Tet) celebration",
+         "traditional dance performance",
+         "graduation / school event",
+         "festival / cultural parade",
+         "formal portrait fashion",
+         "everyday formal wear",
+         "national heritage demonstration"
+      ]
+   }
+}

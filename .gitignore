@@ -1,0 +1,12 @@
+aodai/
+
+benchmark/Bi-Blip4CIR/models
+benchmark/Bi-Blip4CIR/outputs
+
+benchmark/CLIP4Cir/models
+benchmark/CLIP4Cir/outputs
+
+benchmark/pic2word/pic2word_model.pt
+benchmark/SEARLE/outputs
+
+generated/
