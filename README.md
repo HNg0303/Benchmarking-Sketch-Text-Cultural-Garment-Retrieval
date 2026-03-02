@@ -141,6 +141,8 @@ cd generation/Sana
 
 ## 📝 Usage
 
+## NOTES: AoDai Dataset can be downloaded and put in the directories aodai/
+
 ### 1. Image Synthesis with SANA
 
 **Single image synthesis:**
@@ -174,9 +176,7 @@ python process_triplets.py --input_dir aodai/ --output_file generated/output_tri
 ### 4. Evaluation
 
 Evaluate CIR models on the synthesized dataset:
-```bash
-python metric.py --triplet_file aodai/captions/triplet.json --model_name CLIP4Cir
-```
+Each model defined in benchmark/ directories has its own evaluation script which has been fine-tuned and adapted to our VietFashion dataset. Fine-tuned model will be made public soon.
 
 ## 🏆 Research Contributions
 
@@ -199,7 +199,10 @@ The project includes implementations and evaluations of:
 - **Pic2Word**: Vision-language model for composed retrieval
 - **SEARLE**: Scalable end-to-end architecture for image retrieval
 
-Each benchmark includes pre-trained models and evaluation scripts in the `benchmark/` directory.
+Each benchmark includes pre-trained models, training and evaluation scripts in the `benchmark/` directory.
+
+### Result
+<img src="images/results.png" alt="Example Images" width="1000"/>
 
 ## � Citation
 Coming Soon
