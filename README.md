@@ -6,6 +6,8 @@
 
 This research project presents a novel pipeline combining **SANA-ControlNet** for high-fidelity sketch-conditioned image synthesis with **Qwen2.5 3B Instruct** for semantic caption generation. We address the critical challenge of obtaining diverse, high-quality training data for specialized domains like cultural garments. Our approach automates the entire triplet synthesis workflow, eliminating manual annotation and producing a large-scale, multi-modal dataset suitable for training and evaluation of composed image retrieval systems.
 
+<img src="images/examples.png" alt="Example Images" width="1000"/>
+
 ## 🎯 Motivation
 
 Composed image retrieval (CIR) is the task of finding images in a database based on a query combining a reference image with text modifications. However, obtaining diverse, high-quality training data remains a significant bottleneck, particularly for specialized domains like cultural garments where data is scarce.
@@ -23,21 +25,7 @@ This project addresses this challenge by:
 
 Our pipeline follows a structured flow from abstract sketch input to aligned multi-modal triplets:
 
-```
-Sketch Input  +  Attribute Sampling  +  Structured Prompts
-    ↓                      ↓
-[SANA-ControlNet: Spatial Control]  [Attribute Generation]
-    ↓
-Synthesized High-Fidelity Garment Image
-    ↓
-[Qwen2.5 3B Instruct: Caption Distillation]
-    ↓
-Neutral, Factual Text Description (Starting with "A photo of...")
-    ↓
-Triplet Formation: (Sketch, Caption, Multi-Target Images)
-    ↓
-Curated Triplet Dataset: (S, C, I₁, I₂, I₃)
-```
+<img src="images/pipeline.png" alt="Overall Pipeline" width="1000"/>
 
 ### Key Components
 
@@ -214,18 +202,7 @@ The project includes implementations and evaluations of:
 Each benchmark includes pre-trained models and evaluation scripts in the `benchmark/` directory.
 
 ## � Citation
-
-If you use this dataset or pipeline in your research, please cite:
-
-```bibtex
-@misc{AoDaiSTC2026,
-  title={Synthesizing Cultural Garment Triplets for Composed Image Retrieval},
-  author={[Your Name/Lab]},
-  year={2026},
-  note={Submitted to ICMR 2026}
-}
-```
-
+Coming Soon
 ## 📞 Contact
 
 For questions, suggestions, or collaboration opportunities, please reach out to the project maintainers.
