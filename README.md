@@ -1,4 +1,5 @@
-# 👗 VietFashion: Benchmarking Sketch-Text Composed Image Retrieval for Cultural Garments
+# 👗 VietFashion: Benchmarking Sketch-Text Composed Image Retrieval for Cultural Garments (ACCEPTED AT ACM ICMR 2026 - B Rank Conference)
+
 
 **Official repository for VietFashion**, a comprehensive pipeline for synthesizing high-quality triplet datasets (sketch-text-image) specifically for cultural garments. We address the data scarcity bottleneck in Composed Image Retrieval (CIR) by leveraging state-of-the-art generative models to produce **20,000 curated triplets** of the Vietnamese áo dài.
 
